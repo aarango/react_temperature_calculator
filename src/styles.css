@@ -1,7 +1,6 @@
 .App {
   font-family: sans-serif;
   text-align: center;
-  background-color: "red";
 }
 
 .selector {
@@ -9,12 +8,20 @@
 }
 
 .text-color {
-  color: red;
+  color: #116530;
   font-size: 20px;
 }
 
+.card-header {
+  margin: 5px;
+  margin-bottom: 10px;
+}
+
 .card {
-  margin: 10px;
+  margin: 20px;
+  padding: 10px;
   border-radius: 10px;
-  background-color: rgb(120, 150, 140);
+  border: 5px solid rgba(120, 150, 110, 0.2);
+  border-color: bisque;
+  background-color: rgba(120, 150, 110, 0.2);
 }

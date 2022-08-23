@@ -54,7 +54,9 @@ export default function App() {
   return (
     <div className="App">
       <div className="card">
+        <header className='card-header'>
         <label className="text-color"> Ingrese el valor a convertir:</label>
+        </header>
         <section className="selector">
           <input
             type="text"
@@ -94,7 +96,7 @@ export default function App() {
               type="number"
               value={temperature[0].value}
               onChange={updateC}
-            ></input>
+            />
           </div>
           <div id="box2">
             <h1>Fahrenheit</h1>
@@ -102,7 +104,7 @@ export default function App() {
               type="number"
               value={temperature[1].value}
               onChange={updateF}
-            ></input>
+            />
           </div>
         </section>
       </div>
