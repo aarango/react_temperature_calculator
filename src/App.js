@@ -1,55 +1,29 @@
 import "./styles.css";
 import React, { useState } from "react";
 
-const initialState = [
-  {
-    value: 0,
-    type: "C"
-  },
-  {
-    value: 0,
-    type: "F"
-  }
-];
 export default function App() {
-  const [selected, setSelected] = useState(initialState[0].type);
-  const [temperature, setUpdateTemperature] = useState(initialState);
 
-  const updateC = (ev) =>
-    setUpdateTemperature([
-      {
-        value: ev.target.value,
-        type: "C"
-      },
-      {
-        value: ((+ev.target.value * 9) / 5 + 32).toFixed(2),
-        type: "F"
+  const [userInput, setUserInput] = useState(0);
+  const [unit, setUnit] = useState('c')
+
+  const label = unit === 'c'
+    ? 'Celsius to Fahrenheit'
+    : 'Fahrenheit to Celsius'
+
+  const celsius = getTemperature({value: userInput, from: unit, to: 'c'})
+  const fahrenheit = getTemperature({value: userInput, from: unit, to: 'f'})
+
+  function getTemperature({value, from, to }) {
+    let temperature = Number(value);
+    if (from !== to) {
+      if (to === 'f') {
+        temperature = (temperature * 9/5) + 32
+      } else {
+        temperature = (temperature - 32) * 5/9
       }
-    ]);
-
-  const updateF = (ev) =>
-    setUpdateTemperature([
-      {
-        value: (((+ev.target.value - 32) * 5) / 9).toFixed(2),
-        type: "C"
-      },
-      {
-        value: ev.target.value,
-        type: "F"
-      }
-    ]);
-
-  const handleChangeDropDown = (value) => {
-    setSelected(value);
-  };
-
-  const handleChangeInput = (event) => {
-    if (selected === "C") {
-      updateC(event);
-    } else {
-      updateF(event);
     }
-  };
+    return temperature.toFixed(2).toString();
+  }
 
   return (
     <div className="App">
@@ -59,52 +33,30 @@ export default function App() {
         </header>
         <section className="selector">
           <input
-            type="text"
-            id="name"
-            name="name"
-            required
-            size="10"
-            onChange={handleChangeInput}
+            type="number"
+            value={userInput}
+            onChange={(e) => {
+              setUserInput(e.target.value)
+            }}
           />
           <select
             name="temperature"
             id="selector"
-            onChange={(event) => handleChangeDropDown(event.target.value)}
+            onChange={(e) => setUnit(e.target.value)}
           >
-            {temperature.map(({ type }, index) => {
-              return (
-                <option key={index} value={type}>
-                  {type}
-                </option>
-              );
-            })}
+            <option value="c">C</option>
+            <option value="f">F</option>
           </select>
         </section>
         <section>
-          {" "}
-          <label>
-            {" "}
-            {selected === "C"
-              ? `Grados ${selected} --> F`
-              : `Grados ${selected} --> C `}
-          </label>
+          {label}
         </section>
         <section>
-          <div id="box1">
-            <h1>Celsius</h1>
-            <input
-              type="number"
-              value={temperature[0].value}
-              onChange={updateC}
-            />
+          <div>
+            <span>Celsius: {celsius} </span>
           </div>
-          <div id="box2">
-            <h1>Fahrenheit</h1>
-            <input
-              type="number"
-              value={temperature[1].value}
-              onChange={updateF}
-            />
+          <div>
+            <span>Fahrenheit: {fahrenheit}</span>
           </div>
         </section>
       </div>
